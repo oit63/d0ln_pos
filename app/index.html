@@ -1,0 +1,245 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <title>d0ln_pos</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css styles/vendor.css -->
+        <!-- bower:css -->
+        <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:css(.tmp) styles/main.css -->
+        <!--<link rel="stylesheet" href="styles/main.css">-->
+        <!-- endbuild -->
+    </head>
+    <body>
+        <!--[if lt IE 10]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand show-list" href="#">Let's Go</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active" id="go-to-home-page"><a href="#">主页</a></li>
+                        <li><a href="#" class="show-list">商品列表</a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a id="go-to-cart-page" href="#">购物车（<span id="totol">0</span>)</a></li>
+                        <li><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+        <div class="container" id="home">
+            <div class="jumbotron">
+                <h1>Welcome to Let's Go!  </h1>
+                <p>商店里进行购物结算时会使用收银机（POS）系统，这台收银机会在结算时根据客户的购物车（Cart）中的商品（Item）和商店正在进行的优惠活动（Promotion）进行结算和打印购物清单。
+
+                    已知该商店正在对部分商品进行“买二赠一”的优惠活动。
+
+                    我们需要实现一个名为printInventory函数，该函数能够将指定格式的数据作为参数输入，然后在浏览器的控制台中输出结算清单的文本。</p>
+                <p><a class="btn btn-primary btn-lg show-list" role="button" >Let's Go</a></p>
+            </div>
+
+        </div>
+
+        <div class="container " id="list">
+
+            <div class="panel panel-default">
+                <div class="panel-heading text-center"><h3>商品列表</h3></div>
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="text-center">
+                            <th class="text-center">分类</th>
+                            <th class="text-center">名称</th>
+                            <th class="text-center">单价(元)</th>
+                            <th class="text-center">单位</th>
+                            <th class="text-center"></th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id="cart">
+            <div class="panel panel-default cart" id="drink">
+                <div class="panel-heading"><h4>购物车</h4></div>
+                  <div class="panel-body">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                            <th class="text-center">名称</th>
+                            <th class="text-center">单价（元）</th>
+                            <th class="text-center">单位</th>
+                            <th class="text-center">数量</th>
+                            <th class="text-center">小计</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+                <!--<div class="panel panel-default cart" id="fruit">-->
+                    <!--<div class="panel-heading"><h4>水果</h4></div>-->
+                    <!--<div class="panel-body">-->
+                        <!--<table class="table table-bordered">-->
+                          <!--<thead>-->
+                            <!--<tr>-->
+                                <!--<th class="text-center">名称</th>-->
+                                <!--<th class="text-center">单价(元)</th>-->
+                                <!--<th class="text-center">单位</th>-->
+                                <!--<th class="text-center">数量</th>-->
+                                <!--<th class="text-center">小计</th>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--<div class="panel panel-default cart" id="food">-->
+                <!--<div class="panel-heading"><h4>食品</h4></div>-->
+                <!--<div class="panel-body">-->
+                    <!--<table class="table table-bordered">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th class="text-center">名称</th>-->
+                            <!--<th class="text-center">单价(元)</th>-->
+                            <!--<th class="text-center">单位</th>-->
+                            <!--<th class="text-center">数量</th>-->
+                            <!--<th class="text-center">小计</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                    <!--</table>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="panel panel-default cart" id="daily">-->
+                <!--<div class="panel-heading"><h4>日常用品</h4></div>-->
+                <!--<div class="panel-body">-->
+                    <!--<table class="table table-bordered">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th class="text-center">名称</th>-->
+                            <!--<th class="text-center">单价(元)</th>-->
+                            <!--<th class="text-center">单位</th>-->
+                            <!--<th class="text-center">数量</th>-->
+                            <!--<th class="text-center">小计</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                    <!--</table>-->
+                <!--</div>-->
+            <!--</div>-->
+           <p class="text-right ">总计： <span class="text-right all-in-total" >0.00</span>.00元</p>
+            <p><a class="navbar-right btn btn-primary btn-toolbar "  role="button" id="go-to-pay-page" href="#">付款</a></p>
+
+        </div>
+
+        <div class="container" id="pay">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>购物清单</h4></div>
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th class="text-center">分类</th>
+                            <th class="text-center">名称</th>
+                            <th class="text-center">单价(元)</th>
+                            <th class="text-center">单位</th>
+                            <th class="text-center">数量</th>
+                            <th class="text-center">小计</th>
+                        </tr>
+                        </thead>
+                    </table>
+
+                </div>
+                <div class="list">
+                    <a class="list-group-item panel-heading disabled">
+                       赠送商品
+                    </a>
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th class="text-center">分类</th>
+                                <th class="text-center">名称</th>
+                                <th class="text-center"> 数量</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <p class="text-right">总计：0.00元</p>
+                    <p><a class="navbar-right btn btn-primary btn-toolbar "  role="button" href="./pay.html">确认</a></p>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <!-- build:js scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="../bower_components/jquery/dist/jquery.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+
+        <!-- build:js scripts/plugins.js -->
+        <script src="../bower_components/bootstrap/js/affix.js"></script>
+        <script src="../bower_components/bootstrap/js/alert.js"></script>
+        <script src="../bower_components/bootstrap/js/dropdown.js"></script>
+        <script src="../bower_components/bootstrap/js/tooltip.js"></script>
+        <script src="../bower_components/bootstrap/js/modal.js"></script>
+        <script src="../bower_components/bootstrap/js/transition.js"></script>
+        <script src="../bower_components/bootstrap/js/button.js"></script>
+        <script src="../bower_components/bootstrap/js/popover.js"></script>
+        <script src="../bower_components/bootstrap/js/carousel.js"></script>
+        <script src="../bower_components/bootstrap/js/scrollspy.js"></script>
+        <script src="../bower_components/bootstrap/js/collapse.js"></script>
+        <script src="../bower_components/bootstrap/js/tab.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js({app,.tmp}) scripts/main.js -->
+        <script src="scripts/main.js"></script>
+        <script src='scripts/fixtures/fixtures.js'></script>
+        <script src='scripts/model/item.js'></script>
+        <script src="scripts/Initialization.js"></script>
+        <!--<script src="scripts/Time.js"></script>-->
+    <!---->
+        <!--<script src='scripts/promotion.js'></script>-->
+        <!--<script src="scripts/page_jump.js"></script>-->
+
+        <!--<script src="scripts/product_list.js"></script>-->
+        <!--<script src="scripts/shopping_cart.js"></script>-->
+        <!--<script src="scripts/payment.js"></script>-->
+
+        <script src="scripts/underscore.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
