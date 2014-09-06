@@ -40,7 +40,7 @@ button_click = function () {
 
 show_list = function () {
 	var allItems = load_all_items();
-	var bar = $("#list").find("body").html();
+	var bar = $("#list").find("tbody").html();
 	bar = "";
 	$("#list").find("tbody").html('<tr>' + bar + '</tr>');
 	_(allItems).each(function (item) {
@@ -60,7 +60,7 @@ show_list = function () {
 
 plus = function (item_code) {
 	var lists = JSON.parse(localStorage.lists);
-	lists[item_code] = parseInt(lists[item_code]) + 1;
+	lists[item_code] = Number(lists[item_code]) + 1;
 	localStorage.lists = JSON.stringify(lists);
 	var pig = total();
 	$("#totol").text(pig);
@@ -68,7 +68,7 @@ plus = function (item_code) {
 minus = function (item_code) {
 	var lists = JSON.parse(localStorage.lists);
 	if (lists[item_code] > 1) {
-		lists[item_code] = parseInt(lists[item_code]) - 1;
+		lists[item_code] = Number(lists[item_code]) - 1;
 		localStorage.lists = JSON.stringify(lists);
 		var pig = total();
 		$("#totol").text(pig);
@@ -102,7 +102,7 @@ show_cart = function () {
 			"<td>" + item.unit + "</td>" +
 			"<td data-code='" + item.code + "'>" + "<div class='btn-group'>" +
 			"<button type='button' class='btn-group btn-group-sm cart-minus' >-</button>" +
-			"<button type='button' class='btn-group btn-group-sm' disabled='true'>" + "  " + parseInt(lists[item.code]) + "</button>" +
+			"<button type='button' class='btn-group btn-group-sm' disabled='true'>" + "  " + Number(lists[item.code]) + "</button>" +
 			"<button type='button' class='btn-group btn-group-sm cart-plus'>+</button>" +
 			"</div>" +
 			"</td>" +
@@ -114,51 +114,61 @@ show_cart = function () {
 	})
 	$(".cart-plus").on("click", function () {
 		plus($(this).closest("td").data("code"));
-		$(this).closest("td").find("button").eq(1).text(parseInt($(this).closest("td").find("button").eq(1).text()) + 1)
+		$(this).closest("td").find("button").eq(1).text(Number($(this).closest("td").find("button").eq(1).text()) + 1)
 		var price = $(this).closest("tr").find("td").eq(2).text()
-		$(this).closest("tr").find("td").last().text(parseInt($(this).closest("tr").find("td").last().text()) + parseInt(price))
-		$(".all-in-total").text(parseInt($(".all-in-total").text()) + parseInt(price));
+		$(this).closest("tr").find("td").last().text(Number($(this).closest("tr").find("td").last().text()) + Number(price))
+		$(".all-in-total").text(Number($(".all-in-total").text()) + Number(price));
 	})
 	$(".cart-minus").on("click", function () {
 		minus($(this).closest("td").data("code"));
 		if ($(this).closest("td").find("button").eq(1).text() > 1) {
-			$(this).closest("td").find("button").eq(1).text(parseInt($(this).closest("td").find("button").eq(1).text()) - 1);
+			$(this).closest("td").find("button").eq(1).text(Number($(this).closest("td").find("button").eq(1).text()) - 1);
 			var price = $(this).closest("tr").find("td").eq(2).text()
-			$(this).closest("tr").find("td").last().text(parseInt($(this).closest("tr").find("td").last().text()) - parseInt(price))
+			$(this).closest("tr").find("td").last().text(Number($(this).closest("tr").find("td").last().text()) - Number(price))
 		}
-		$(".all-in-total").text(parseInt($(".all-in-total").text()) - parseInt(price));
+		$(".all-in-total").text(Number($(".all-in-total").text()) - Number(price));
 	})
 	$(".all-in-total").text(allInTotal);
 }
 
 
-//show_pay = function(){
-//	var lists = JSON.parse(localStorage.lists);
-//	var allItems = load_all_items();
-//	var bar = $("#pay").find("table").eq(0).html();
-//	$("#pay").find("table").eq(0).html('<tr>' + bar + '</tr>');
-//	var allInTotal = 0;
-//	_(allItems).each(function (item) {
-//		var inTotal = item.price * lists[item.code];
-//		var tbodyTr = "<tr class='text-center'>" +
-//			"<td class='code'>" + item.code + "</td>" +
-//			"<td>" + item.name + "</td>" +
-//			"<td class='price'>" + item.price + "</td>" +
-//			"<td>" + item.unit + "</td>" +
-//			"<td data-code='" + item.code + "'>" + "<div class='btn-group'>" +
-//			"<button type='button' class='btn-group btn-group-sm cart-minus' >-</button>" +
-//			"<button type='button' class='btn-group btn-group-sm' disabled='true'>" + "  " + parseInt(lists[item.code]) + "</button>" +
-//			"<button type='button' class='btn-group btn-group-sm cart-plus'>+</button>" +
-//			"</div>" +
-//			"</td>" +
-//			"<td>" + inTotal + "</td>" +
-//			"</tr>";
-//		$("#pay").find("table").eq(1).append(tbodyTr);
-//		$("#pay").find(".code").hide();
-//		allInTotal += inTotal;
-////	})
-//
-//}
+show_pay = function(){
+	var lists = JSON.parse(localStorage.lists);
+	var allItems = load_all_items();
+	var bar = $("#pay").find("tbody").eq(0).html();
+	bar = "";
+	$("#pay").find("tbody").eq(0).html('<tr>' + bar + '</tr>');
+	var allInTotal = 0;
+	_(allItems).each(function (item) {
+		var inTotal = item.price * lists[item.code];
+		var tbodyTr = "<tr class='text-center'>" +
+			"<td class='code'>" + item.code + "</td>" +
+			"<td>" + item.sort + "</td>" +
+			"<td>" + item.name + "</td>" +
+			"<td class='price'>" + item.price + "</td>" +
+			"<td>" + item.unit + "</td>" +
+			"<td>" + Number(lists[item.code]) +"</td>"+
+			"<td>" + inTotal + "</td>" +
+			"</tr>";
+		$("#pay").find("table").eq(0).append(tbodyTr);
+		$("#pay").find(".code").hide();
+		allInTotal += inTotal;
+	})
+
+	_(allItems).each(function (item) {
+		var inTotal = item.price * lists[item.code];
+		var tbodyTr =   "<tr class='text-center'>" +
+						"<td class='code'>" + item.code + "</td>" +
+						"<td>" + item.sort + "</td>" +
+						"<td>" + item.name + "</td>" +
+						"<td>" + Number(lists[item.code]) +"</td>"+
+						"</tr>";
+		$("#pay").find("table").eq(1).append(tbodyTr);
+		$("#pay").find(".code").hide();
+		allInTotal += inTotal;
+	})
+
+}
 
 
 
