@@ -39,15 +39,25 @@ show_cart = function () {
 			"</td>" +
 			"<td>" + '<span>' + inTotal + '</span>';
 
-		if (_.indexOf(type_pay, item.code) != -1) {
-			$("#drink").find("table").append(tbodyTrD);
-			allInTotal += inTotalDiscount;
+		if(Number(lists[item.code]) > 0){
+			if (_.indexOf(type_pay, item.code) != -1) {
+				$("#drink").find("table").append(tbodyTrD);
+				allInTotal += inTotalDiscount;
+			}
+			else {
+				$("#drink").find("table").append(tbodyTr);
+				allInTotal += inTotal;
+			}
 		}
-		else {
-			$("#drink").find("table").append(tbodyTr);
-			allInTotal += inTotal;
+		if(allInTotal < 1){
+			$('#home').hide();
+			$('#cart').hide();
+			$('#pay').hide();
+			$('#list').show();
+			show_list();
 		}
 		$("#drink").find(".code").hide();
+		$(".all-in-total").text(allInTotal);
 	})
 
 
@@ -57,6 +67,7 @@ show_cart = function () {
 		var num_button = $(this).closest("td").find("button").eq(1)
 		num_button.text(Number(num_button.text()) + 1);
 		if(_.indexOf(type_pay, item_code) != -1) {
+			var pretotal =+ $(this).closest("tr").find("td").eq("5").find("span").eq("0").text();
 			var price = Number($(this).closest("tr").find("td").eq(2).text());
 			var total =  $(this).closest("tr").find("td").last().find("span").eq(2);
 			total.text(Number(total.text()) + price);
@@ -65,7 +76,8 @@ show_cart = function () {
 			var inTotalDiscount = inTotal - parseInt(num / 3) * price;
 			var totalDiscount = $(this).closest("tr").find("td").last().find("span").first();
 			totalDiscount.text(inTotalDiscount);
-
+			var add = inTotalDiscount - pretotal;
+			allInTotal += add;
 		}
 		else{
 			var price =+ $(this).closest("tr").find("td").eq(2).text();
@@ -73,17 +85,19 @@ show_cart = function () {
 			price_inTotal.text(Number(price_inTotal.text()) + Number(price))
 			var num =+ $(this).closest("tr").find(".number").text();
 			var inTotal =+ price * num;
+			allInTotal += price;
 		}
 		$(".all-in-total").text(allInTotal);
 	})
 
 	$(".cart-minus").on("click", function () {
 		item_code = $(this).closest("td").data("code");
-		minus($(this).closest("td").data("code"));
-		var num_button = $(this).closest("td").find("button").eq(1)
-		if (num_button.text() > 1) {
+		minus(item_code);
+		var num_button = $(this).closest("td").find("button").eq(1);
+		if (Number( num_button.text() > 0)) {
 			if(_.indexOf(type_pay, item_code) != -1) {
 				num_button.text(Number(num_button.text()) - 1);
+				var pretotal =+ $(this).closest("tr").find("td").eq("5").find("span").eq("0").text();
 				var price = Number($(this).closest("tr").find("td").eq(2).text());
 				var total = $(this).closest("tr").find("td").last().find("span").eq(2);
 				total.text(Number(total.text()) - price);
@@ -92,14 +106,30 @@ show_cart = function () {
 				var inTotalDiscount = inTotal - parseInt(num / 3) * price;
 				var totalDiscount = $(this).closest("tr").find("td").last().find("span").first();
 				totalDiscount.text(inTotalDiscount);
+				var add = inTotalDiscount - pretotal;
+				allInTotal += add;
 			}
 			else {
-					var price =+ $(this).closest("tr").find("td").eq(2).text();
-					price_inTotal = $(this).closest("tr").find("td").last().find("span");
-					price_inTotal.text(Number(price_inTotal.text()) - Number(price));
+				num_button.text(Number(num_button.text()) - 1);
+				var price =+ $(this).closest("tr").find("td").eq(2).text();
+				price_inTotal = $(this).closest("tr").find("td").last().find("span");
+				price_inTotal.text(Number(price_inTotal.text()) - Number(price));
+				allInTotal -= price;
 				}
 		}
+		if(Number( num_button.text()) === 0){
+			$(this).closest("tr").remove();
+			if(allInTotal < 1){
+				$('#home').hide();
+				$('#cart').hide();
+				$('#pay').hide();
+				$('#list').show();
+				show_list();
+			}
+		}
 		$(".all-in-total").text(allInTotal);
+		console.log( allInTotal)
+
 	})
 }
 

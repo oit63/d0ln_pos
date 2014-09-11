@@ -14,12 +14,14 @@ plus = function (item_code) {
 
 minus = function (item_code) {
 	var lists = JSON.parse(localStorage.lists);
-	if (lists[item_code] > 1) {
+	if (lists[item_code] > 0) {
 		lists[item_code] = Number(lists[item_code]) - 1;
 		localStorage.lists = JSON.stringify(lists);
 		var pig = total();
 		$("#totol").text(pig);
 	}
+
+
 };
 
 total = function () {
