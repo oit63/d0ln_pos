@@ -38,7 +38,6 @@ show_cart = function () {
 			"</div>" +
 			"</td>" +
 			"<td>" + '<span>' + inTotal + '</span>';
-
 		if(Number(lists[item.code]) > 0){
 			if (_.indexOf(type_pay, item.code) != -1) {
 				$("#drink").find("table").append(tbodyTrD);
@@ -49,17 +48,19 @@ show_cart = function () {
 				allInTotal += inTotal;
 			}
 		}
-		if(allInTotal < 1){
-			$('#home').hide();
-			$('#cart').hide();
-			$('#pay').hide();
-			$('#list').show();
-			show_list();
-		}
+
+
 		$("#drink").find(".code").hide();
 		$(".all-in-total").text(allInTotal);
 	})
-
+	
+	if(allInTotal < 1){
+		$('#home').hide();
+		$('#cart').hide();
+		$('#pay').hide();
+		$('#list').show();
+		show_list();
+	}
 
 	$(".cart-plus").on("click", function () {
 		item_code = $(this).closest("td").data("code");
