@@ -34,8 +34,10 @@ show_pay = function(){
 				"<td>" + item.name + "</td>" +
 				"<td>" + parseInt(Number(lists[item.code]) / 3) + "</td>" +
 				"</tr>";
-			$("#pay").find("table").eq(1).append(tbodyTr);
-			$("#pay").find(".code").hide();
+			if(Number(lists[item.code]) > 0){
+				$("#pay").find("table").eq(1).append(tbodyTr);
+				$("#pay").find(".code").hide();
+				}
 		}
 	})
 
