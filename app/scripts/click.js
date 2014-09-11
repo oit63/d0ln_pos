@@ -31,4 +31,20 @@ button_click = function () {
 		$('#pay').show();
 		show_pay();
 	})
+	$('.confirm').on('click', function () {
+		$('#home').hide();
+		$('#list').show();
+		$('#cart').hide();
+		$('#pay').hide();
+		show_list();
+		var allItems = load_all_items();
+		var list = {};
+		for (var index in allItems) {
+			var code = allItems[index].code;
+			list[code] = 0;
+		}
+		localStorage.lists = JSON.stringify(list);
+		$("#totol").text("0");
+	})
+
 }
