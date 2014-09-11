@@ -16,8 +16,11 @@ show_pay = function(){
 			"<td>" + Number(lists[item.code]) +"</td>"+
 			"<td>" + inTotal + "</td>" +
 			"</tr>";
-		$("#pay").find("table").eq(0).append(tbodyTr);
-		$("#pay").find(".code").hide();
+
+		if(Number(lists[item.code]) > 0){
+			$("#pay").find("table").eq(0).append(tbodyTr);
+			$("#pay").find(".code").hide();
+		}
 		allInTotal += inTotal;
 	})
 

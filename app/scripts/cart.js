@@ -1,4 +1,5 @@
 show_cart = function () {
+	var saved = 0;
 	var type_pay = ["coke", "sprite", "instant_noodles"];
 	var lists = JSON.parse(localStorage.lists);
 	var allItems = load_all_items();
@@ -6,6 +7,7 @@ show_cart = function () {
 	bar = "";
 	$("#drink").find("tbody").html('<tr>' + bar + '</tr>');
 	var allInTotal = 0;
+	var fullAllInTotal = 0;
 	_(allItems).each(function (item) {
 		var inTotal = Number(item.price * lists[item.code]);
 		var inTotalDiscount = inTotal - Number.parseInt(lists[item.code] / 3) * item.price;
@@ -47,13 +49,15 @@ show_cart = function () {
 				$("#drink").find("table").append(tbodyTr);
 				allInTotal += inTotal;
 			}
+			fullAllInTotal += inTotal;
 		}
-
 
 		$("#drink").find(".code").hide();
 		$(".all-in-total").text(allInTotal);
+		$(".saved").text(fullAllInTotal - allInTotal);
+
 	})
-	
+
 	if(allInTotal < 1){
 		$('#home').hide();
 		$('#cart').hide();
@@ -63,7 +67,7 @@ show_cart = function () {
 	}
 
 	$(".cart-plus").on("click", function () {
-		item_code = $(this).closest("td").data("code");
+		var item_code = $(this).closest("td").data("code");
 		plus(item_code);
 		var num_button = $(this).closest("td").find("button").eq(1)
 		num_button.text(Number(num_button.text()) + 1);
@@ -79,6 +83,8 @@ show_cart = function () {
 			totalDiscount.text(inTotalDiscount);
 			var add = inTotalDiscount - pretotal;
 			allInTotal += add;
+
+			discount = parseInt(num / 3) * price
 		}
 		else{
 			var price =+ $(this).closest("tr").find("td").eq(2).text();
@@ -129,7 +135,6 @@ show_cart = function () {
 			}
 		}
 		$(".all-in-total").text(allInTotal);
-		console.log( allInTotal)
 
 	})
 }
