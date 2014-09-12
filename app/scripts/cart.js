@@ -58,7 +58,7 @@ show_cart = function () {
 
 		saved = fullAllInTotal - allInTotal;
 		id = "#" + item.code;
-		if(!Number(saved)){
+		if(Number(saved)<= 0){
 			var dog = $(id).closest("tr").find("td").last().find("span");
 			console.log($(id).closest("tr").find("td").last().find("span").eq(0).text())
 			dog.eq(1).hide();
@@ -95,7 +95,17 @@ show_cart = function () {
 			var add = inTotalDiscount - pretotal;
 
 			allInTotal += add;
-
+			var dog1 = $(this).closest("tr").find("td").last().find("span");
+			if(num<3){
+				dog1.eq(1).hide();
+				dog1.eq(2).hide();
+				dog1.eq(3).hide();
+			}
+			if(num>2){
+				dog1.eq(1).show();
+				dog1.eq(2).show();
+				dog1.eq(3).show();
+			}
 			discount = parseInt(num / 3) * price
 		}
 		else{
@@ -149,6 +159,18 @@ show_cart = function () {
 				$('#go-to-cart-page').closest("li").removeClass("active");
 			}
 		}
+		var dog1 = $(this).closest("tr").find("td").last().find("span");
+		if(num<3){
+			dog1.eq(1).hide();
+			dog1.eq(2).hide();
+			dog1.eq(3).hide();
+		}
+		if(num>2){
+			dog1.eq(1).show();
+			dog1.eq(2).show();
+			dog1.eq(3).show();
+		}
+
 		$(".all-in-total").text(allInTotal);
 
 	})
