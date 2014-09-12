@@ -5,6 +5,7 @@ show_pay = function(){
 	var bar = $("#pay").find("tbody").html();
 	bar = "";
 	$("#pay").find("tbody").html('<tr>' + bar + '</tr>');
+	$('#time').text(time.get_time());
 	var allInTotal = 0;
 	_(allItems).each(function (item) {
 		var inTotal = item.price * lists[item.code];
