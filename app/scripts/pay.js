@@ -1,14 +1,32 @@
 show_pay = function(){
+	var saved = 0;
 	var time = new Time();
 	var lists = JSON.parse(localStorage.lists);
+	var type_pay = ["coke", "sprite", "instant_noodles"];
 	var allItems = load_all_items();
+	bar = "";
+	$("#drink").find("tbody").html('<tr>' + bar + '</tr>');
 	var bar = $("#pay").find("tbody").html();
 	bar = "";
 	$("#pay").find("tbody").html('<tr>' + bar + '</tr>');
-	$('#time').text(time.get_time());
 	var allInTotal = 0;
+	var fullAllInTotal = 0;
 	_(allItems).each(function (item) {
-		var inTotal = item.price * lists[item.code];
+		var inTotal = Number(item.price * lists[item.code]);
+		var inTotalDiscount = inTotal - Number.parseInt(lists[item.code] / 3) * item.price;
+		var tbodyTrD = "<tr class='text-center'>" +
+			"<td class='code' id='"+ item.code + "'>" + item.code + "</td>" +
+			"<td>" + item.sort + "</td>" +
+			"<td>" + item.name + "</td>" +
+			"<td class='price'>" + item.price + "</td>" +
+			"<td>" + item.unit + "</td>" +
+			"<td>" + Number(lists[item.code]) +"</td>"+
+			"<td>" + '<span>' + inTotalDiscount + '</span>' +
+			'<span>(原价:' + '</span>' +
+			'<span>' + inTotal + '</span>' +
+			'<span>元)' + '</span>' +
+			"</td>" +
+			"</tr>";
 		var tbodyTr = "<tr class='text-center'>" +
 			"<td class='code'>" + item.code + "</td>" +
 			"<td>" + item.sort + "</td>" +
@@ -16,16 +34,35 @@ show_pay = function(){
 			"<td class='price'>" + item.price + "</td>" +
 			"<td>" + item.unit + "</td>" +
 			"<td>" + Number(lists[item.code]) +"</td>"+
-			"<td>" + inTotal + "</td>" +
+			"<td>" + '<span>' + inTotal + '</span>' +
+			"</td>" +
 			"</tr>";
-
 		if(Number(lists[item.code]) > 0){
-			$("#pay").find("table").eq(0).append(tbodyTr);
-			$("#pay").find(".code").hide();
+			if (_.indexOf(type_pay, item.code) != -1) {
+				$("#pay").find("table").eq(0).append(tbodyTrD);
+				allInTotal += inTotalDiscount;
+			}
+			else {
+				$("#pay").find("table").eq(0).append(tbodyTr);
+				allInTotal += inTotal;
+			}
+			fullAllInTotal += inTotal;
 		}
+		$("#pay").find(".code").hide();
 		allInTotal += inTotal;
+
+		var saved = fullAllInTotal - allInTotal;
+		var id = "#" + item.code;
+		if(Number(saved)<= 0){
+			var dog = $(id).closest("tr").find("td").last().find("span");
+			dog.eq(1).hide();
+			dog.eq(2).hide();
+			dog.eq(3).hide();
+		}
+
 	})
 
+	var jdb = 0;
 	_(allItems).each(function (item) {
 		var inTotal = item.price * lists[item.code];
 		var type_pay = ["coke","sprite","instant_noodles"]
@@ -36,12 +73,17 @@ show_pay = function(){
 				"<td>" + item.name + "</td>" +
 				"<td>" + parseInt(Number(lists[item.code]) / 3) + "</td>" +
 				"</tr>";
-			if(Number(lists[item.code]) > 0){
+			if(parseInt(Number(lists[item.code]) / 3) > 0){
 				$("#pay").find("table").eq(1).append(tbodyTr);
 				$("#pay").find(".code").hide();
-				}
+			}
+			jdb += parseInt(Number(lists[item.code]) / 3);
 		}
 	})
+	if(!jdb){
+		$("#pay-promotion").find("a").first().hide();
+		$("#pay").find("table").eq(1).hide();
+	}
 
 }
 
