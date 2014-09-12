@@ -1,4 +1,5 @@
 show_pay = function(){
+	var time = new Time();
 	var lists = JSON.parse(localStorage.lists);
 	var allItems = load_all_items();
 	var bar = $("#pay").find("tbody").html();

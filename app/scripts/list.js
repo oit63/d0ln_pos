@@ -1,3 +1,4 @@
+
 show_list = function () {
 	var allItems = load_all_items();
 	var bar = $("#list").find("tbody").html();

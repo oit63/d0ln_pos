@@ -54,8 +54,8 @@ show_cart = function () {
 
 		$("#drink").find(".code").hide();
 		$(".all-in-total").text(allInTotal);
-		$(".saved").text(fullAllInTotal - allInTotal);
-
+		console.log(fullAllInTotal - allInTotal)
+		saved = fullAllInTotal - allInTotal;
 	})
 
 	if(allInTotal < 1){
@@ -64,6 +64,8 @@ show_cart = function () {
 		$('#pay').hide();
 		$('#list').show();
 		show_list();
+		$('#go-to-cart-page').closest("li").removeClass("active");
+		$('.show-list').closest("li").addClass("active");
 	}
 
 	$(".cart-plus").on("click", function () {
@@ -132,6 +134,9 @@ show_cart = function () {
 				$('#pay').hide();
 				$('#list').show();
 				show_list();
+				$('#go-to-home-page').removeClass("active");
+				$('.show-list').closest("li").addClass("active");
+				$('#go-to-cart-page').closest("li").removeClass("active");
 			}
 		}
 		$(".all-in-total").text(allInTotal);
