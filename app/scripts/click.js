@@ -22,7 +22,7 @@ button_click = function () {
 		$('#list').show();
 		show_list();
 		$('#go-to-home-page').removeClass("active");
-		$(this).closest("li").addClass("active");
+		$('#show-list').addClass("active");
 		$('#go-to-cart-page').closest("li").removeClass("active");
 	})
 	$('#go-to-cart-page').on('click', function () {
@@ -31,10 +31,13 @@ button_click = function () {
 		$('#pay').hide();
 		$('#cart').show();
 		show_cart();
+		$('#go-to-home-page').removeClass("active");
 		if(Number($("#totol").text())){
+
 			$(this).closest("li").addClass("active");
-			$('#go-to-home-page').removeClass("active");
 			$('.show-list').closest("li").removeClass("active");
+		}else{
+			$('#show-list').addClass("active");
 		}
 	})
 	$('#go-to-pay-page').on('click', function () {
@@ -43,6 +46,7 @@ button_click = function () {
 		$('#cart').hide();
 		$('#pay').show();
 		show_pay();
+		$('#go-to-cart-page').closest("li").removeClass("active");
 	})
 	$('.confirm').on('click', function () {
 		$('#home').hide();
@@ -58,6 +62,7 @@ button_click = function () {
 		}
 		localStorage.lists = JSON.stringify(list);
 		$("#totol").text("0");
+		$('#show-list').addClass("active");
 	})
 
 }
