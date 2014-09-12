@@ -58,9 +58,9 @@ show_cart = function () {
 
 		saved = fullAllInTotal - allInTotal;
 		id = "#" + item.code;
-		if(Number(saved)<= 0){
+		var num =+ $(id).closest("tr").find(".number").text();
+		if(num < 3){
 			var dog = $(id).closest("tr").find("td").last().find("span");
-			console.log($(id).closest("tr").find("td").last().find("span").eq(0).text())
 			dog.eq(1).hide();
 			dog.eq(2).hide();
 			dog.eq(3).hide();

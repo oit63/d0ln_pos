@@ -37,10 +37,17 @@ show_pay = function(){
 			"<td>" + '<span>' + inTotal + '</span>' +
 			"</td>" +
 			"</tr>";
+		var id = "#" + item.code;
 		if(Number(lists[item.code]) > 0){
 			if (_.indexOf(type_pay, item.code) != -1) {
 				$("#pay").find("table").eq(0).append(tbodyTrD);
 				allInTotal += inTotalDiscount;
+				if(item.num <= 3){
+					var dog = $(id).closest("tr").find("td").last().find("span");
+					dog.eq(1).hide();
+					dog.eq(2).hide();
+					dog.eq(3).hide();
+				}
 			}
 			else {
 				$("#pay").find("table").eq(0).append(tbodyTr);
@@ -52,13 +59,8 @@ show_pay = function(){
 		allInTotal += inTotal;
 
 		var saved = fullAllInTotal - allInTotal;
-		var id = "#" + item.code;
-		if(Number(saved)<= 0){
-			var dog = $(id).closest("tr").find("td").last().find("span");
-			dog.eq(1).hide();
-			dog.eq(2).hide();
-			dog.eq(3).hide();
-		}
+
+
 
 	})
 
