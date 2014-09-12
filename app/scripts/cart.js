@@ -12,20 +12,21 @@ show_cart = function () {
 		var inTotal = Number(item.price * lists[item.code]);
 		var inTotalDiscount = inTotal - Number.parseInt(lists[item.code] / 3) * item.price;
 		var tbodyTrD = "<tr class='text-center'>" +
-			"<td class='code'>" + item.code + "</td>" +
+			"<td class='code' id='"+ item.code + "'>" + item.code + "</td>" +
 			"<td>" + item.name + "</td>" +
 			"<td class='price'>" + item.price + "</td>" +
 			"<td>" + item.unit + "</td>" +
-			"<td data-code='" + item.code + "'>" + "<div class='btn-group'>" +
-			"<button type='button' class='btn-group btn-group-sm cart-minus' >-</button>" +
-			"<button type='button' class='btn-group btn-group-sm number' disabled='true'>" + Number(lists[item.code]) + "</button>" +
-			"<button type='button' class='btn-group btn-group-sm cart-plus' >+</button>" +
-			"</div>" +
+			"<td data-code='" + item.code + "'>" +
+				"<div class='btn-group'>" +
+					"<button type='button' class='btn-group btn-group-sm cart-minus' >-</button>" +
+					"<button type='button' class='btn-group btn-group-sm number' disabled='true'>" + Number(lists[item.code]) + "</button>" +
+					"<button type='button' class='btn-group btn-group-sm cart-plus' >+</button>" +
+				"</div>" +
 			"</td>" +
 			"<td>" + '<span>' + inTotalDiscount + '</span>' +
-			'<span>(原价:' + '</span>' +
-			'<span>' + inTotal + '</span>' +
-			'<span>元)' + '</span>' +
+						'<span>(原价:' + '</span>' +
+						'<span>' + inTotal + '</span>' +
+						'<span>元)' + '</span>' +
 			"</td>" +
 			"</tr>";
 		var tbodyTr = "<tr class='text-center'>" +
@@ -34,9 +35,9 @@ show_cart = function () {
 			"<td class='price'>" + item.price + "</td>" +
 			"<td>" + item.unit + "</td>" +
 			"<td data-code='" + item.code + "'>" + "<div class='btn-group'>" +
-			"<button type='button' class='btn-group btn-group-sm cart-minus' >-</button>" +
-			"<button type='button' class='btn-group btn-group-sm number' disabled='true'>" + Number(lists[item.code]) + "</button>" +
-			"<button type='button' class='btn-group btn-group-sm cart-plus'>+</button>" +
+				"<button type='button' class='btn-group btn-group-sm cart-minus' >-</button>" +
+				"<button type='button' class='btn-group btn-group-sm number' disabled='true'>" + Number(lists[item.code]) + "</button>" +
+				"<button type='button' class='btn-group btn-group-sm cart-plus'>+</button>" +
 			"</div>" +
 			"</td>" +
 			"<td>" + '<span>' + inTotal + '</span>';
@@ -51,11 +52,19 @@ show_cart = function () {
 			}
 			fullAllInTotal += inTotal;
 		}
-
 		$("#drink").find(".code").hide();
 		$(".all-in-total").text(allInTotal);
-		console.log(fullAllInTotal - allInTotal)
+//		console.log(fullAllInTotal - allInTotal)
+
 		saved = fullAllInTotal - allInTotal;
+		id = "#" + item.code;
+		if(!Number(saved)){
+			var dog = $(id).closest("tr").find("td").last().find("span");
+			console.log($(id).closest("tr").find("td").last().find("span").eq(0).text())
+			dog.eq(1).hide();
+			dog.eq(2).hide();
+			dog.eq(3).hide();
+		}
 	})
 
 	if(allInTotal < 1){
@@ -84,6 +93,7 @@ show_cart = function () {
 			var totalDiscount = $(this).closest("tr").find("td").last().find("span").first();
 			totalDiscount.text(inTotalDiscount);
 			var add = inTotalDiscount - pretotal;
+
 			allInTotal += add;
 
 			discount = parseInt(num / 3) * price
@@ -142,6 +152,9 @@ show_cart = function () {
 		$(".all-in-total").text(allInTotal);
 
 	})
+
+
+
 }
 
 
