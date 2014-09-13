@@ -1,6 +1,7 @@
 show_pay = function(){
 	var saved = 0;
 	var time = new Time();
+	$('#time').text(time.get_time());
 	var lists = JSON.parse(localStorage.lists);
 	var type_pay = ["coke", "sprite", "instant_noodles"];
 	var allItems = load_all_items();
@@ -20,7 +21,7 @@ show_pay = function(){
 			"<td>" + item.name + "</td>" +
 			"<td class='price'>" + item.price + "</td>" +
 			"<td>" + item.unit + "</td>" +
-			"<td>" + Number(lists[item.code]) +"</td>"+
+			"<td class='number'>" + Number(lists[item.code]) +"</td>"+
 			"<td>" + '<span>' + inTotalDiscount + '</span>' +
 			'<span>(原价:' + '</span>' +
 			'<span>' + inTotal + '</span>' +
@@ -42,12 +43,16 @@ show_pay = function(){
 			if (_.indexOf(type_pay, item.code) != -1) {
 				$("#pay").find("table").eq(0).append(tbodyTrD);
 				allInTotal += inTotalDiscount;
-				if(item.num <= 3){
+				id = "#" + item.code;
+				var num =+ $(id).closest("tr").find(".number").text();
+				if(num < 3){
 					var dog = $(id).closest("tr").find("td").last().find("span");
 					dog.eq(1).hide();
 					dog.eq(2).hide();
 					dog.eq(3).hide();
+					saved
 				}
+				saved += inTotal- inTotalDiscount
 			}
 			else {
 				$("#pay").find("table").eq(0).append(tbodyTr);
@@ -58,12 +63,10 @@ show_pay = function(){
 		$("#pay").find(".code").hide();
 		allInTotal += inTotal;
 
-		var saved = fullAllInTotal - allInTotal;
-
 
 
 	})
-
+	$(".saved").text(saved)
 	var jdb = 0;
 	_(allItems).each(function (item) {
 		var inTotal = item.price * lists[item.code];
@@ -85,6 +88,7 @@ show_pay = function(){
 	if(!jdb){
 		$("#pay-promotion").find("a").first().hide();
 		$("#pay").find("table").eq(1).hide();
+		$(".saved").closest("p").hide()
 	}
 
 }

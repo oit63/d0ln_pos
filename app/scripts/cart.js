@@ -34,7 +34,8 @@ show_cart = function () {
 			"<td>" + item.name + "</td>" +
 			"<td class='price'>" + item.price + "</td>" +
 			"<td>" + item.unit + "</td>" +
-			"<td data-code='" + item.code + "'>" + "<div class='btn-group'>" +
+			"<td data-code='" + item.code + "'>" +
+			"<div class='btn-group'>" +
 				"<button type='button' class='btn-group btn-group-sm cart-minus' >-</button>" +
 				"<button type='button' class='btn-group btn-group-sm number' disabled='true'>" + Number(lists[item.code]) + "</button>" +
 				"<button type='button' class='btn-group btn-group-sm cart-plus'>+</button>" +
@@ -54,7 +55,6 @@ show_cart = function () {
 		}
 		$("#drink").find(".code").hide();
 		$(".all-in-total").text(allInTotal);
-//		console.log(fullAllInTotal - allInTotal)
 
 		saved = fullAllInTotal - allInTotal;
 		id = "#" + item.code;
